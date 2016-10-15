@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/main.css"/>
+</head>
+<body>
+<div class="container">
+    <h4>Screenshots interval</h4>
+    <div class="screenshot-interval-container">
+        <input type="text" class="screenshot-interval" value="15"/>
+        <div class="screenshot-interval-text">min.</div>
+    </div>
+    <button id="capture-btn">Start</button>
+
+    <div class="archive-container">
+        <div class="archive-header">
+            <div class="archive-title">
+                <div>Archive</div>
+                <div class="archive-date-header">today</div>
+            </div>
+            <div class="archive-hide">Show all</div>
+        </div>
+        <div class="archive-dates-container archive-dates-container-hided"></div>
+    </div>
+    <input type="file" class="archive-folder-select" webkitdirectory style="display: none"/>
+    <div class="destination-path">
+        <div class="destination-path-left">
+            <div class="destination-path-title">Destination</div>
+            <div class="destination-path-change">Change</div>
+        </div>
+        <input class="destination-path-value" value="" readonly/>
+    </div>
+    <input type="file" class="destination-folder-select" webkitdirectory style="display: none"/>
+    <div>
+        <div class="btn-hide">Hide</div>
+    </div>
+</div>
+<script src="../js/capture.js"></script>
+</body>
+</html>

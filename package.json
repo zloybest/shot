@@ -1,0 +1,26 @@
+{
+  "name": "Shot",
+  "version": "1.0.0",
+  "description": "Simple screenshot creator for setted time interval",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "zip-folder": "^1.0.0"
+  },
+  "devDependencies": {
+    "electron": "1.4.3"
+  },
+  "build": {
+    "appId": "com.zloy.shot",
+    "mac": {
+      "category": "app"
+    },
+    "win": {
+      "iconUrl": "123"
+    }
+  }
+}
