@@ -1,11 +1,13 @@
-const {app, BrowserWindow, ipcMain, Tray, Menu} = require('electron');
+const electron = require('electron');
+const {app, BrowserWindow, ipcMain, Tray, Menu} = electron;
 const path = require('path');
 
 // In the renderer process.
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let win
+let win,
+  shotViewWin;
 
 function createWindow () {
   // Create the browser window.
@@ -55,17 +57,38 @@ app.on('activate', () => {
 ipcMain.on('asynchronous-message', (e, arg) => {
   if(arg === 'hideWindow') {
     win.hide();
-  }
-  if(arg === 'captureStart') {
+  } else if(arg === 'captureStart') {
     const iconName = 'app-icon-20.png';
     const iconPath = path.join(__dirname, 'src', 'img', iconName);
     appIcon.setImage(iconPath);
-  }
-
-  if(arg === 'captureStop') {
+  } else if(arg === 'captureStop') {
     const iconName = 'app-icon-20-gray.png';
     const iconPath = path.join(__dirname, 'src', 'img', iconName);
     appIcon.setImage(iconPath);
+  } else {
+    arg = JSON.parse(arg);
+    if (arg.cmd == 'captureShotView') {
+      const {width} = electron.screen.getPrimaryDisplay().workAreaSize;
+      shotViewWin = new BrowserWindow({
+        show: true,
+        skipTaskbar: true,
+        titleBarStyle: 'hidden-inset',
+        alwaysOnTop: true,
+        resizable: false,
+        movable: false,
+        minimizable: false,
+        maximizable: false,
+        autoHideMenuBar: true,
+        x: width - 400,
+        y: 20,
+        width: 400,
+        height: 160
+      });
+      shotViewWin.loadURL(`file://${__dirname}/src/html/shotview.html?${arg.path}`);
+    }
+    if (arg.cmd == 'captureShotViewClose') {
+      shotViewWin.close();
+    }
   }
 });
 

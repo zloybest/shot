@@ -22,6 +22,10 @@ const screenshotIntervalInput = document.querySelector('.screenshot-interval');
 
 let captureInterval = null;
 
+document.querySelector('#testBtn').addEventListener('click', () => {
+  showShotView('');
+});
+
 options.on('init', (options) => {
   screenshotIntervalInput.value = options.interval;
   document.querySelector('.archive-date-header').addEventListener('click', () => {
@@ -87,6 +91,7 @@ function capture() {
 
         fs.writeFile(screenshotPath, source.thumbnail.toPng(), function (error) {
           if (error) return console.log(error);
+          showShotView(screenshotPath);
           // shell.openExternal('file://' + screenshotPath);
           // const message = `Saved screenshot to: ${screenshotPath}`;
           // screenshotMsg.textContent = message;
@@ -94,6 +99,10 @@ function capture() {
       }
     })
   })
+}
+
+function showShotView(pathToScreenshot) {
+  ipcRenderer.send('asynchronous-message', JSON.stringify({cmd: 'captureShotView', path: pathToScreenshot}));
 }
 
 startBtn.addEventListener('click', function () {
