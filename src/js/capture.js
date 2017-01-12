@@ -2,7 +2,7 @@ const electron = require('electron');
 const desktopCapturer = electron.desktopCapturer;
 const electronScreen = electron.screen;
 const shell = electron.shell;
-const {ipcRenderer} = electron;
+const {ipcRenderer, remote} = electron;
 
 const fs = require('fs');
 const os = require('os');
@@ -12,6 +12,8 @@ const zipFolder = require('zip-folder');
 const options = require('../js/options');
 const { formatTime, getDirs } = require('../js/utils');
 
+const appVersion = remote.getGlobal('packageData').version;
+
 const startBtn = document.querySelector('button');
 const showArchivesBtn = document.querySelector('.archive-hide');
 const archiveDatesContainer = document.querySelector('.archive-dates-container');
@@ -19,12 +21,13 @@ const screenshotMsg = document.getElementById('screenshot-path');
 const destinationBtn = document.querySelector('.destination-path-change');
 const hideBtn = document.querySelector('.btn-hide');
 const screenshotIntervalInput = document.querySelector('.screenshot-interval');
+const appVersionNode = document.querySelector('#appVersion');
+
+if(appVersionNode) {
+  appVersionNode.innerText = 'Version ' + appVersion;
+}
 
 let captureInterval = null;
-
-document.querySelector('#testBtn').addEventListener('click', () => {
-  showShotView('');
-});
 
 options.on('init', (options) => {
   screenshotIntervalInput.value = options.interval;
@@ -58,6 +61,7 @@ function startCapture() {
   if(parseFloat(options.get.interval) <= 0) {
     return;
   }
+  screenshotIntervalInput.setAttribute('disabled', true);
   options.get.isActive = true;
   document.querySelector('#capture-btn').innerText = 'Stop';
   captureInterval = setInterval(capture, (parseFloat(options.get.interval) || 1) * 1000 * 60);
@@ -66,6 +70,7 @@ function startCapture() {
 
 function stopCapture() {
   options.get.isActive = false;
+  screenshotIntervalInput.removeAttribute('disabled');
   document.querySelector('#capture-btn').innerText = 'Start';
   clearInterval(captureInterval);
   ipcRenderer.send('asynchronous-message', 'captureStop');

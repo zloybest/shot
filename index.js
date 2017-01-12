@@ -1,7 +1,25 @@
+const fs = require('fs');
 const electron = require('electron');
 const {app, BrowserWindow, ipcMain, Tray, Menu} = electron;
 const path = require('path');
 
+let packageData;
+try {
+  packageData = fs.readFileSync('package.json');
+} catch (e) {
+  console.log(e);
+}
+if(packageData) {
+  try {
+    packageData = JSON.parse(packageData);
+  } catch (e) {
+    packageData = null;
+    console.log(e);
+  }
+}
+if(packageData) {
+  global.packageData = packageData;
+}
 // In the renderer process.
 
 // Keep a global reference of the window object, if you don't, the window will

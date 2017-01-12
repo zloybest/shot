@@ -184,3 +184,7 @@ button:active {
   text-align: right;
   color: #cbcbcb;
 }
+
+#appVersion {
+  margin-top: 10px;
+}

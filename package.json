@@ -1,11 +1,12 @@
 {
   "name": "Shot",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Simple screenshot creator for setted time interval",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node_modules/.bin/build"
+    "build": "node_modules/.bin/build",
+    "start" : "electron index.js"
   },
   "author": "",
   "license": "ISC",
