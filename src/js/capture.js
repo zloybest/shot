@@ -11,8 +11,8 @@ const zipFolder = require('zip-folder');
 
 const options = require('../js/options');
 const { formatTime, getDirs } = require('../js/utils');
-
-const appVersion = remote.getGlobal('packageData').version;
+const packageData = remote.getGlobal('packageData');
+const appVersion = packageData ? packageData.version : false;
 
 const startBtn = document.querySelector('button');
 const showArchivesBtn = document.querySelector('.archive-hide');

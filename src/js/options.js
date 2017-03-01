@@ -3,7 +3,7 @@ const path = require('path');
 
 const options = {};
 const eventHandlers = {};
-const FILE_PATH = path.join(process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE, '.shot');
+const FILE_PATH = path.join(require('os').homedir(), '.shot');
 const FILE_NAME = path.join(FILE_PATH, 'zloy-shot-app-options.json');
 
 options.default = {

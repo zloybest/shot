@@ -2,21 +2,24 @@ const fs = require('fs');
 const electron = require('electron');
 const {app, BrowserWindow, ipcMain, Tray, Menu} = electron;
 const path = require('path');
+const packageData = require('./package.json');
 
-let packageData;
-try {
-  packageData = fs.readFileSync('package.json');
-} catch (e) {
-  console.log(e);
-}
-if(packageData) {
-  try {
-    packageData = JSON.parse(packageData);
-  } catch (e) {
-    packageData = null;
-    console.log(e);
-  }
-}
+//setInterval(() => console.log(app.getVersion()), 3000);
+
+//
+// try {
+//   packageData = fs.readFileSync('src/package.json');
+// } catch (e) {
+//   console.log(e);
+// }
+// if(packageData) {
+//   try {
+//     packageData = JSON.parse(packageData);
+//   } catch (e) {
+//     packageData = { version: 1 };
+//     console.log(e);
+//   }
+// }
 if(packageData) {
   global.packageData = packageData;
 }
@@ -100,7 +103,8 @@ ipcMain.on('asynchronous-message', (e, arg) => {
         x: width - 400,
         y: 20,
         width: 400,
-        height: 160
+        height: 160,
+        frame: false
       });
       shotViewWin.loadURL(`file://${__dirname}/src/html/shotview.html?${arg.path}`);
     }

@@ -3,7 +3,8 @@ const fs = require('fs');
 
 const shotPath = window.location.search.substr(1);
 const shot = document.querySelector('#shot');
-shot.style.backgroundImage = `url("file://${shotPath}")`;
+shot.style.backgroundImage = `url("file:///${shotPath.replace(/\\/g, '/')}")`;
+
 shot.addEventListener('click', () => {
   openScreenshot();
 });
